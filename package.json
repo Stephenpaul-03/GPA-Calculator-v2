@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/Stephenpaul-03/GPA-Calculator-v2.git",
+  "homepage": "https://stephenpaul-03.github.io/GPA-Calculator-v2/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
