@@ -6,7 +6,6 @@ Welcome to **GPA Calculator v2** — MKII tool for calculating GPA or CGPA on a 
 
 This new version builds on the previous one [*more like a complete overhaul*] but packs even more convenience and flexibility. 
 
----
 
 ## How GPA is Calculated
 
@@ -42,10 +41,10 @@ And there you have it! Easy, right?
 P.S. Both GPA and CGPA are calculated using the same method, so *technically*, you can add multiple semesters and calculate your CGPA up to that point.
 
 ```
-If the app calculates both GPA and CGPA, does that make it a GPA calculator, a CGPA calculator, or something in between? 🤔
+If the app calculates both GPA and CGPA, 
+does that make it a GPA calculator, a CGPA calculator, or something in between? 🤔
 ```
 
----
 
 ## Clone
 
@@ -64,8 +63,6 @@ npm install
 # Start the development server
 npm run dev
 ```
-
----
 
 ## Usage
 
@@ -89,7 +86,6 @@ Couldn’t find your college or year of study? No worries! You can:
 
 If you think your college should be added to the presets, reach out to me (contact details below). I’m also working on a semi-automatic way to add colleges using Python and Excel sheets.
 
----
 
 ## Export Options
 Once you’ve calculated your GPA, you can flex your results by downloading them as:
@@ -99,20 +95,17 @@ Once you’ve calculated your GPA, you can flex your results by downloading them
 
 Whether it’s for bragging rights or sending it to your family, I’ve got you covered. 
 
----
 
 ## Future Implementations
 Here’s what’s cooking for future updates:
 - **Semi-automatic addition of colleges and credits** using Excel sheets.
 - **Dark mode** (Put those forks down, I ran out of time!).
 
----
 
 ## Known Bugs
 - The horizontal view for mobile is a bit wonky. I’ll fix it soon.
 - When downloading images in mobile view, only the currently visible content is captured. 
 
----
 
 ## Contact Me
 Got feedback? Found a bug? Just want to say hi? Reach out!
@@ -120,16 +113,14 @@ Got feedback? Found a bug? Just want to say hi? Reach out!
 - **LinkedIn**: [LinkedIn](https://www.linkedin.com/in/stephen-paul-i/)
 - **Gmail**: stephenpaul4040@gmail.com
 
----
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
----
 
 ## Acknowledgements
 This project wouldn’t have been possible without these amazing resources:
-- [**React Docs**](https://reactjs.org/docs/getting-started.html)
+- [**React Docs**](https://react.dev/learn)
 - [**Vite Docs**](https://vitejs.dev/guide/)
 - [**Chakra UI Docs**](https://chakra-ui.com/docs)
 - **ChatGPT**
