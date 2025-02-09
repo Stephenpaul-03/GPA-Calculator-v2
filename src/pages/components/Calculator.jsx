@@ -8,6 +8,7 @@ import {
   Tooltip,
   useBreakpointValue,
   Stack,
+  useToast,
 } from "@chakra-ui/react";
 import { PlusIcon, MinusIcon } from "@heroicons/react/outline";
 import SubjectRow from "../elements/SubjectRow";
@@ -18,6 +19,7 @@ const Calculator = ({ subjects, onSubjectsChange }) => {
   const [results, setResults] = useState(null);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [alertType, setAlertType] = useState(null);
+  const toast = useToast();
 
   const buttonSize = useBreakpointValue({ base: "xs", md: "sm" });
   const containerPadding = useBreakpointValue({ base: 2, md: 4 });
@@ -56,12 +58,13 @@ const Calculator = ({ subjects, onSubjectsChange }) => {
     let Total_Credits = 0;
     let Total_Score = 0;
     let InvalidCredits = false;
+    let MissingCreditsSubjects = [];
 
     const Result = subjects.map(({ name, credits, grade }, index) => {
       const Credits = parseFloat(credits);
       const Grades = Grade_Val_Dict[grade?.toUpperCase()];
 
-      if (isNaN(Credits) || Credits < 0 || Credits > 5) {
+      if (isNaN(Credits) || Credits < 0 || Credits > 6) {
         InvalidCredits = true;
         return {
           name: name || `Subject ${index + 1}`,
@@ -71,9 +74,15 @@ const Calculator = ({ subjects, onSubjectsChange }) => {
         };
       }
 
-      const Score = Credits * Grades || 0;
-      Total_Credits += Credits || 0;
-      Total_Score += Score;
+      if (!grade) {
+        MissingCreditsSubjects.push(name || `Subject ${index + 1}`);
+      }
+
+      const Score = Grades ? Credits * Grades : 0;
+      if (Grades) {
+        Total_Credits += Credits;
+        Total_Score += Score;
+      }
 
       return {
         name: name || `Subject ${index + 1}`,
@@ -89,7 +98,18 @@ const Calculator = ({ subjects, onSubjectsChange }) => {
       return;
     }
 
-    const GPA = (Total_Score / Total_Credits).toFixed(3);
+    if (MissingCreditsSubjects.length > 0) {
+      toast({
+        title: "Missing Grades",
+        description: `Grades missing for: ${MissingCreditsSubjects.join(", ")}`,
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
+    const GPA =
+      Total_Credits > 0 ? (Total_Score / Total_Credits).toFixed(3) : "N/A";
     setResults({
       rows: Result,
       totalCredits: Total_Credits,
@@ -110,13 +130,13 @@ const Calculator = ({ subjects, onSubjectsChange }) => {
 
   return (
     <>
-      <Box display="flex" flexDirection="column" minH="md" px={containerPadding}>
-        <Box
-          bg="white"
-          display="flex"
-          pb={4}
-          justifyContent="flex-end"
-        >
+      <Box
+        display="flex"
+        flexDirection="column"
+        minH="md"
+        px={containerPadding}
+      >
+        <Box bg="white" display="flex" pb={4} justifyContent="flex-end">
           <HStack spacing={4} direction={"row"}>
             <Tooltip
               bg={"whiteAlpha.800"}
@@ -183,7 +203,11 @@ const Calculator = ({ subjects, onSubjectsChange }) => {
               >
                 Clear
               </Button>
-              <Button colorScheme="blue" size={buttonSize} onClick={Calculate_GPA}>
+              <Button
+                colorScheme="blue"
+                size={buttonSize}
+                onClick={Calculate_GPA}
+              >
                 Calculate
               </Button>
             </Stack>
@@ -204,7 +228,7 @@ const Calculator = ({ subjects, onSubjectsChange }) => {
             alertType === "clear"
               ? "Are you sure you want to clear all the entered data? This action cannot be undone."
               : alertType === "invalidcredits"
-              ? "Please Verify that all credits are provided and are within the limit [0-5] "
+              ? "Please Verify that all credits are provided and are within the limit [0-6] "
               : "A minimum of 3 rows of subjects are required."
           }
           confirmText={alertType === "clear" ? "Clear" : "Understood"}
@@ -212,7 +236,6 @@ const Calculator = ({ subjects, onSubjectsChange }) => {
           onConfirm={alertType === "clear" ? Handle_Clear : Handle_Error}
         />
       </Box>
-
       {results && <Result results={results} />}
     </>
   );

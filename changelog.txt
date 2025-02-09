@@ -1,0 +1,4 @@
+Version 1.01
+
+    Fixed an issue where the credits of subjects without a grade were incorrectly included in the total credits, leading to errors in CGPA/GPA calculation.
+    Increased the maximum credit limit to 6 to accommodate subjects with higher credit values.
